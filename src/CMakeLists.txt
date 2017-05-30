@@ -4,8 +4,7 @@ cmake_minimum_required(VERSION 2.4)
 
 set(CMAKE_BUILD_TYPE Release)
 
-add_library(
-  SMHasherSupport
+add_library(${PROJECT_NAME} SHARED
   AvalancheTest.cpp
   Bitslice.cpp
   Bitvec.cpp
@@ -32,12 +31,12 @@ add_library(
   PMurHash.c
 )
 
-add_executable(
-  SMHasher
-  main.cpp
-)
+include_directories(${CMAKE_SOURCE_DIR})
 
 target_link_libraries(
   SMHasher
-  SMHasherSupport
 )
+
+install(TARGETS ${PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
+file(GLOB HEADERS ${CMAKE_SOURCE_DIR}/*.h)
+install(FILES ${HEADERS} DESTINATION ${CMAKE_INSTALL_PREFIX}/include)
